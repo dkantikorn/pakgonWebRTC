@@ -1,0 +1,50 @@
+<div class="container">
+  <h1>PAKGON Demo for web RTC.</h1>
+
+  <form materialize class="col s12" id="frmPersonRegister">
+    <div class="row">
+      <div class="input-field col s6">
+        <i class="material-icons prefix">person_add</i>
+        <input placeholder="Please enter your register name" id="username" type="text" class="validate">
+        <label for="username">Register name</label>
+      </div>
+      <div class="col s3">
+        <button class="waves-effect waves-light btn btn-large" type="button" id="btnRegister" name="btnRegister" (click)="memberRegister()">
+          <i class="material-icons left">cloud</i>
+          Register
+        </button>
+      </div>
+    </div>
+  </form>
+
+
+  <form materialize class="col s12" id="frmVoiceCall">
+    <div class="row">
+      <div class="input-field col s6">
+        <i class="material-icons prefix">record_voice_over</i>
+        <input placeholder="Please enter the caller name" id="peer" type="text" class="validate">
+        <label for="peer">Caller name</label>
+      </div>
+      <div class="col s3">
+        <button class="waves-effect waves-light btn btn-large blue darken-1" type="button" id="btnCall" name="btnCall" (click)="memberCall()">
+          <i class="material-icons left">call</i>Call</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- <div class="container" id="myVideoContainer">
+    <video id="meVideo" autoplay></video>
+  </div>
+  
+  <div class="container" id="otherVideoContainer">
+    <video id="otherVideo" autoplay></video>
+  </div> -->
+
+<div class="container" id="myVideoContainer">
+  <video id="meVideo" autoplay #meVideo></video>
+</div>
+
+<div class="container" id="otherVideoContainer">
+  <video id="otherVideo" autoplay #otherVideo></video>
+</div>

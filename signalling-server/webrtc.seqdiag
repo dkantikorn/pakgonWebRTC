@@ -1,0 +1,42 @@
+participant Caller Browser as B1
+participant Caller PC as PC1
+participant Signaling Server as SS
+participant Callee PC as PC2
+participant Callee Browser as B2
+
+B1->SS: open web socket
+B1->SS: register username
+B2->SS: open web socket
+B2->SS: register username
+B1->*PC1:new
+B1->B1:getUserMedia(constraints):stream
+B1->B1:callerVideo.srcObject = stream
+B1->PC1:addStream(stream)
+B1->PC1:createOffer():offer
+B1->PC1:setLocalDescription(offer)
+B1->SS:send('call', from, to, offer)
+SS->B2:onmessage('incoming_call', from, to, offer)
+PC1-->B1:onnegotionneeded
+PC1-->B1:onicecandidate
+B1->SS:send('icecandidate', username, iceCandidate)
+SS->B2:onmessage('on_icecandidate', iceCandidate)
+B2->*PC2:new
+B2->PC2:addIceCandidate(iceCandidate)
+B2->PC2:setRemoteDescription(offer)
+PC2-->B2:onaddstream(stream)
+B2->B2:callerVideo.srcObject = stream
+B2->B2:getUserMedia(constraints):stream
+B2->B2:calleeVideo.srcObject(stream)
+B2->PC2:addStream(stream)
+B2->PC2:createAnswer():answer
+B2->PC2:setLocalDescription(answer)
+B2->SS:send('answer', from, to, answer)
+SS->B1:onmessage('call_response', from, to, answer)
+B1->PC1:setRemoteDescription(answer)
+PC1-->B1:onaddstream(stream)
+B1->B1:calleeVideo.srcObject = stream
+PC2-->B2:onnegotiationneeded
+PC2-->B2:onicecandidate
+B2->SS:send('icecandidate', username, iceCandidate)
+SS->B1:onmessage('on_icecandidate', iceCandidate)
+B1->PC1:addIceCandidate(iceCandidate)
