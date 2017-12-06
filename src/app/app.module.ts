@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app.routes';
+import { WindowRefService } from './services/window-ref.service';
 
 import { AppComponent } from './app.component';
 import { DemoMaterial2Component } from './demo-material2/demo-material2.component';
@@ -25,7 +26,9 @@ import { DumpctpComponent } from './dumpctp/dumpctp.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    {provide: Window, useValue: window }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
